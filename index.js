@@ -1,4 +1,4 @@
-import { Graph } from 'graphlib'
+import Graph from 'graphlib/lib/graph'
 import layoutGraph from './lib/layout.js'
 
 function createGraph() {
@@ -39,4 +39,4 @@ function createGraph() {
     return g;
 }
 
-createGraph();
+export default createGraph;

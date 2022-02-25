@@ -1,5 +1,5 @@
 const path = require("path");
-const TerserPlugin = require('terser-webpack-plugin');
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry: path.resolve(__dirname, "index.js"),
@@ -7,25 +7,26 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         filename: "dagre-graph.js",
         library: "DagreGraph",
-        libraryTarget: "umd",
-        globalObject: "this",
-        publicPath: '/',
+        libraryTarget: "umd"
     },
     module: {
         rules: [{
             test: /\.(js)$/,
             exclude: /node_modules/,
-            use: "babel-loader",
-            options: {
-                presets: ['@babel/preset-env'],
-                plugins: ['@babel/plugin-lodash']
+            use: {
+                loader: "babel-loader",
+                options: {
+                    presets: ['@babel/preset-env'],
+                    plugins: ['babel-plugin-lodash']
+                }
             }
         }],
     },
     mode: "production",
     optimization: {
-        minimizer: [new TerserPlugin({
-            extractComments: false
-        })],
-    }
+        usedExports: true
+    },
+    plugins: [
+        //new BundleAnalyzerPlugin()
+    ]
 }
