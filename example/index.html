@@ -9,7 +9,22 @@
 <body>
     <script src="../dist/dagre-graph.js"></script>
     <script>
-        
+        let graph = DagreGraph.json({
+            "kspacey": { label: "Kevin Spacey", width: 144, height: 100 },
+            "swilliams": { label: "Saul Williams", width: 160, height: 100 },
+            "bpitt": { label: "Brad Pitt", width: 108, height: 100 },
+            "hford": { label: "Harrison Ford", width: 168, height: 100 },
+            "lwilson": { label: "Luke Wilson", width: 144, height: 100 },
+            "kbacon": { label: "Kevin Bacon", width: 121, height: 100 }
+        },[
+            ["kspacey", "swilliams"],
+            ["swilliams", "kbacon"],
+            ["bpitt", "kbacon"],
+            ["hford", "lwilson"],
+            ["lwilson", "kbacon"]
+        ]);
+
+        console.log(graph);
     </script>
 </body>
 </html>

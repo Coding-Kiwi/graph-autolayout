@@ -7,7 +7,8 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         filename: "dagre-graph.js",
         library: "DagreGraph",
-        libraryTarget: "umd"
+        libraryTarget: "umd",
+        libraryExport: "default"
     },
     module: {
         rules: [{

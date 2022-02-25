@@ -1,7 +1,7 @@
 import Graph from 'graphlib/lib/graph'
 import layoutGraph from './lib/layout.js'
 
-function createGraph() {
+function createGraph(nodes, edges) {
     let g = new Graph();
 
     // Set an object for the graph label
@@ -13,30 +13,41 @@ function createGraph() {
     // Add nodes to the graph. The first argument is the node id. The second is
     // metadata about the node. In this case we're going to add labels to each of
     // our nodes.
-    g.setNode("kspacey", { label: "Kevin Spacey", width: 144, height: 100 });
-    g.setNode("swilliams", { label: "Saul Williams", width: 160, height: 100 });
-    g.setNode("bpitt", { label: "Brad Pitt", width: 108, height: 100 });
-    g.setNode("hford", { label: "Harrison Ford", width: 168, height: 100 });
-    g.setNode("lwilson", { label: "Luke Wilson", width: 144, height: 100 });
-    g.setNode("kbacon", { label: "Kevin Bacon", width: 121, height: 100 });
+    for (const n in nodes) {
+        g.setNode(n, nodes[n]);
+    }
 
     // Add edges to the graph.
-    g.setEdge("kspacey", "swilliams");
-    g.setEdge("swilliams", "kbacon");
-    g.setEdge("bpitt", "kbacon");
-    g.setEdge("hford", "lwilson");
-    g.setEdge("lwilson", "kbacon");
+    edges.forEach(e => {
+        g.setEdge(e[0], e[1]);
+    })
 
     layoutGraph(g);
-
-    g.nodes().forEach(function(v) {
-        console.log("Node " + v + ": " + JSON.stringify(g.node(v)));
-    });
-    g.edges().forEach(function(e) {
-        console.log("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(g.edge(e)));
-    });
 
     return g;
 }
 
-export default createGraph;
+function createJsonGraph(nodes, edges) {
+    let g = createGraph(nodes, edges);
+
+    return {
+        nodes: g.nodes().map(function(v) {
+            return {
+                id: v,
+                ...g.node(v)
+            };
+        }),
+        edges: g.edges().map(function(e) {
+            return {
+                from: e.v,
+                to: e.w,
+                ...g.edge(e)
+            };
+        })
+    };
+}
+
+export default {
+    json: createJsonGraph,
+    graph: createGraph
+};
