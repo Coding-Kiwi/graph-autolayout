@@ -7,24 +7,82 @@
     <title>Example</title>
 </head>
 <body>
+    <canvas id="canvas" width="1000" height="1000"></canvas>
     <script src="../dist/dagre-graph.js"></script>
     <script>
         let graph = DagreGraph.json({
-            "kspacey": { label: "Kevin Spacey", width: 144, height: 100 },
-            "swilliams": { label: "Saul Williams", width: 160, height: 100 },
-            "bpitt": { label: "Brad Pitt", width: 108, height: 100 },
-            "hford": { label: "Harrison Ford", width: 168, height: 100 },
-            "lwilson": { label: "Luke Wilson", width: 144, height: 100 },
-            "kbacon": { label: "Kevin Bacon", width: 121, height: 100 }
+            "a": { label: "a", width: 80, height: 36 },
+            "b": { label: "b", width: 80, height: 36 },
+            "c": { label: "c", width: 80, height: 36 },
+            "d": { label: "d", width: 80, height: 36 },
+            "e": { label: "e", width: 80, height: 36 },
+            "f": { label: "f", width: 80, height: 36 },
+            "g": { label: "g", width: 80, height: 36 },
+            "h": { label: "h", width: 80, height: 36 },
         },[
-            ["kspacey", "swilliams"],
-            ["swilliams", "kbacon"],
-            ["bpitt", "kbacon"],
-            ["hford", "lwilson"],
-            ["lwilson", "kbacon"]
-        ]);
+            ["a", "b"],
+            ["a", "c"],
+            ["b", "d"],
+            ["c", "d"],
+            ["d", "e"],
+            ["e", "h"],
+            ["a", "f"],
+            ["a", "g"],
+            ["g", "h"],
+            ["f", "h"],
+        ], {
+            rankdir: "LR",
+            ranker: 'network-simplex',
+            nodesep: 35,
+            edgesep: 10,
+            ranksep: 75
+        });
 
         console.log(graph);
+
+        let c = document.getElementById("canvas");
+        let ctx = c.getContext("2d");
+
+        ctx.textAlign = "center";
+
+        graph.nodes.forEach(n => {
+            ctx.beginPath();
+            ctx.rect(n.x - n.width * 0.5, n.y - n.height * 0.5, n.width, n.height);
+            ctx.stroke();
+            ctx.fillText(n.id, n.x, n.y + n.height * 0.5 + 10);
+        });
+
+        graph.edges.forEach(e => {
+            ctx.beginPath();
+
+            let nodeStart = e.from;
+            let nodeEnd = e.to;
+
+            if(nodeStart.x > nodeEnd.x){
+                let tmp = nodeEnd;
+                nodeEnd = nodeStart;
+                nodeStart = tmp;
+            }
+
+            let from = {
+                x: nodeStart.x + nodeStart.width * 0.5,
+                y: nodeStart.y
+            };
+
+            let to = {
+                x: nodeEnd.x - nodeStart.width * 0.5,
+                y: nodeEnd.y
+            }
+
+            ctx.moveTo(from.x, from.y);
+            ctx.bezierCurveTo(
+                from.x + 50, from.y,
+                to.x - 50, to.y,
+                to.x, to.y
+            );
+
+            ctx.stroke();
+        });
     </script>
 </body>
 </html>

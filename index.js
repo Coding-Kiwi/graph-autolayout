@@ -1,11 +1,14 @@
-import Graph from 'graphlib/lib/graph'
+import Graph from './lib/graphlib/graph.js'
 import layoutGraph from './lib/layout.js'
 
-function createGraph(nodes, edges) {
-    let g = new Graph();
+function createGraph(nodes, edges, options = {}) {
+    let g = new Graph({
+        multigraph: true,
+        compound: true
+    });
 
     // Set an object for the graph label
-    g.setGraph({});
+    g.setGraph(options);
 
     // Default to assigning a new object as a label for each new edge.
     g.setDefaultEdgeLabel(function() { return {}; });
@@ -27,24 +30,27 @@ function createGraph(nodes, edges) {
     return g;
 }
 
-function createJsonGraph(nodes, edges) {
-    let g = createGraph(nodes, edges);
+function createJsonGraph(nodes, edges, options = {}) {
+    let g = createGraph(nodes, edges, options);
 
-    return {
-        nodes: g.nodes().map(function(v) {
-            return {
-                id: v,
-                ...g.node(v)
-            };
-        }),
-        edges: g.edges().map(function(e) {
-            return {
-                from: e.v,
-                to: e.w,
-                ...g.edge(e)
-            };
-        })
-    };
+    let ret = {};
+
+    ret.nodes = g.nodes().map((v) => {
+        return {
+            id: v,
+            ...g.node(v)
+        };
+    });
+
+    ret.edges = g.edges().map((e) => {
+        return {
+            from: ret.nodes.find(n => n.id === e.v),
+            to: ret.nodes.find(n => n.id === e.w),
+            ...g.edge(e)
+        };
+    });
+
+    return ret;
 }
 
 export default {
