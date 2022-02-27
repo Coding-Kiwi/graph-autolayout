@@ -11,7 +11,7 @@ function createGraph(nodes, edges, options = {}) {
     g.setGraph(options);
 
     // Default to assigning a new object as a label for each new edge.
-    g.setDefaultEdgeLabel(function() { return {}; });
+    g.setDefaultEdgeLabel(() => ({}));
 
     // Add nodes to the graph. The first argument is the node id. The second is
     // metadata about the node. In this case we're going to add labels to each of
