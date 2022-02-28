@@ -25,6 +25,7 @@
             ["b", "d"],
             ["c", "d"],
             ["d", "e"],
+            ["e", "d"],
             ["e", "h"],
             ["a", "f"],
             ["a", "g"],
@@ -53,7 +54,7 @@
         });
 
         graph.edges.forEach(e => {
-            ctx.beginPath();
+            /* ctx.beginPath();
 
             let nodeStart = e.from;
             let nodeEnd = e.to;
@@ -81,6 +82,14 @@
                 to.x, to.y
             );
 
+            ctx.stroke(); */
+
+            ctx.beginPath();
+
+            ctx.moveTo(e.points[0].x, e.points[0].y);
+            for (let i = 1; i < e.points.length; i++) {
+                ctx.lineTo(e.points[i].x, e.points[i].y);
+            }
             ctx.stroke();
         });
     </script>
