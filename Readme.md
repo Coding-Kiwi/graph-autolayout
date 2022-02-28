@@ -18,7 +18,7 @@ Reduced [graph-autolayout.js](https://github.com/dagrejs/dagre/blob/master/dist/
 
 ## Example
 
-![example graph](/example/example.png)
+![example graph](https://git.codingkiwi.de/codingkiwi/graph-autolayout/raw/branch/master/example/example.png)
 [example.html](https://git.codingkiwi.de/codingkiwi/graph-autolayout/src/branch/master/example/index.html)
 
 ## Usage
