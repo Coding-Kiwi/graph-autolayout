@@ -50,6 +50,10 @@ function createJsonGraph(nodes, edges, options = {}) {
         };
     });
 
+    ret.graph = g;
+    ret.width = g.graph().width;
+    ret.height = g.graph().height;
+
     return ret;
 }
 

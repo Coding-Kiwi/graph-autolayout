@@ -73,6 +73,9 @@ let graph = GraphAutolayout.json({
             {x: 117.5, y: 18},
             {x: 155, y: 18}
         ]
-    ]
+    ],
+    graph: <graphlib>,
+    width: 700,
+    height: 238.75
 }
 ```
