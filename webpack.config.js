@@ -5,8 +5,8 @@ module.exports = {
     entry: path.resolve(__dirname, "index.js"),
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "dagre-graph.js",
-        library: "DagreGraph",
+        filename: "graph-autolayout.js",
+        library: "GraphAutolayout",
         libraryTarget: "umd",
         libraryExport: "default"
     },

@@ -1,8 +1,8 @@
 {
-    "name": "graph",
+    "name": "graph-autolayout",
     "version": "1.0.0",
-    "description": "treeshaked version of dagrejs",
-    "main": "index.js",
+    "description": "lightweight and reduced version of dagrejs",
+    "main": "dist/graph-autolayout.js",
     "sideEffects": false,
     "scripts": {
         "build": "webpack",
@@ -18,5 +18,17 @@
         "webpack-bundle-analyzer": "^4.5.0",
         "webpack-cli": "^4.9.2"
     },
-    "dependencies": {}
+    "dependencies": {},
+    "directories": {
+        "lib": "lib",
+        "dist": "dist"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://git.codingkiwi.de/codingkiwi/dagre.git"
+    },
+    "keywords": [
+        "graph",
+        "autolayout"
+    ]
 }
