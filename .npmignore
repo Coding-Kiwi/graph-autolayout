@@ -1,0 +1,6 @@
+node_modules
+example
+!dist
+.drone.yml
+.jsbeautifyrc
+webpack.config.js
