@@ -2,5 +2,8 @@
     "presets": [
         "@babel/preset-env"
     ],
+    "plugins": [
+        "lodash"
+    ],
     "targets": "last 2 versions, not dead"
 }
