@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example</title>
+</head>
+<body>
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+    <script src="https://dagrejs.github.io/project/dagre/latest/dagre.min.js"></script>
+    <script>
+        let g = new dagre.graphlib.Graph({
+            multigraph: true,
+            compound: true
+        });
+
+        // Set an object for the graph label
+        g.setGraph({
+            rankdir: "LR",
+            ranker: 'network-simplex',
+            nodesep: 35,
+            edgesep: 10,
+            ranksep: 75
+        });
+
+        // Default to assigning a new object as a label for each new edge.
+        g.setDefaultEdgeLabel(() => ({}));
+
+        let nodes = {
+            "a": { label: "a", width: 80, height: 36 },
+            "b": { label: "b", width: 80, height: 36 },
+            "c": { label: "c", width: 80, height: 36 },
+            "d": { label: "d", width: 80, height: 36 },
+            "e": { label: "e", width: 80, height: 36 },
+            "f": { label: "f", width: 80, height: 36 },
+            "g": { label: "g", width: 80, height: 36 },
+            "h": { label: "h", width: 80, height: 36 },
+        };
+
+        let edges = [
+            ["a", "b"],
+            ["a", "c"],
+            ["b", "d"],
+            ["c", "d"],
+            ["d", "e"],
+            ["e", "d"],
+            ["e", "h"],
+            ["a", "f"],
+            ["a", "g"],
+            ["g", "h"],
+            ["f", "h"],
+        ];
+
+        // Add nodes to the graph. The first argument is the node id. The second is
+        // metadata about the node. In this case we're going to add labels to each of
+        // our nodes.
+        for (const n in nodes) {
+            g.setNode(n, nodes[n]);
+        }
+
+        // Add edges to the graph.
+        edges.forEach(e => {
+            g.setEdge(e[0], e[1]);
+        })
+
+        dagre.layout(g);
+
+        let c = document.getElementById("canvas");
+        let ctx = c.getContext("2d");
+
+        ctx.textAlign = "center";
+
+        g.nodes().forEach(function(v) {
+            let n = g.node(v);
+
+            ctx.beginPath();
+            ctx.rect(n.x - n.width * 0.5, n.y - n.height * 0.5, n.width, n.height);
+            ctx.stroke();
+            ctx.fillText(n.label, n.x, n.y + n.height * 0.5 + 10);
+        });
+
+        g.edges().forEach(function(e) {
+            let edge = g.edge(e);
+            ctx.beginPath();
+
+            ctx.moveTo(edge.points[0].x, edge.points[0].y);
+            for (let i = 1; i < edge.points.length; i++) {
+                ctx.lineTo(edge.points[i].x, edge.points[i].y);
+            }
+            ctx.stroke();
+        });
+    </script>
+</body>
+</html>
