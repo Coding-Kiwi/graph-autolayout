@@ -1,6 +1,6 @@
 {
     "name": "graph-autolayout",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "lightweight and reduced version of dagrejs",
     "main": "dist/graph-autolayout.js",
     "sideEffects": false,
